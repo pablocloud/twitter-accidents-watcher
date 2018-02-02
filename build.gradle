@@ -1,0 +1,41 @@
+buildscript {
+    ext {
+        springBootVersion = '1.5.9.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'groovy'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+group = 'es.pablocloud'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Groovy
+    compile('org.codehaus.groovy:groovy')
+
+    // Spring
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    // Twitter
+    compile('org.twitter4j:twitter4j-core:4.0.6')
+
+    // Databases
+    runtime('com.h2database:h2:1.4.196')
+
+    // Testing
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
