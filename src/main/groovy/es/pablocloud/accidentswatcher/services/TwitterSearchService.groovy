@@ -25,7 +25,7 @@ class TwitterSearchService {
     def search(){
         ArrayList<Accident> list = new ArrayList()
         def actual = 0
-        Query query = new Query('accident')
+        Query query = new Query('accident OR accidente')
         QueryResult queryResult = twitter.search(query)
         while (queryResult.hasNext() && actual < total) {
             if (actual != 0) {

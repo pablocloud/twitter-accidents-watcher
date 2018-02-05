@@ -11,7 +11,7 @@ buildscript {
 }
 
 apply plugin: 'groovy'
-apply plugin: 'eclipse'
+apply plugin: 'war'
 apply plugin: 'org.springframework.boot'
 
 group = 'es.pablocloud'
