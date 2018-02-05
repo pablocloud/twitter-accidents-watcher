@@ -1,4 +1,4 @@
-package es.pablocloud.accidentswatcher.twitter
+package es.pablocloud.accidentswatcher.beans
 
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Component

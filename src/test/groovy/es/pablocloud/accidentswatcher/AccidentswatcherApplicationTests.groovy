@@ -24,7 +24,7 @@ class AccidentswatcherApplicationTests {
     AccidentRepositoy accidentRepositoy
 
     @Test
-    void testing() {
+    void testTwitter() {
         ArrayList<Accident> list = new ArrayList()
         def actual = 0
         Query query = new Query('accidente OR accident')
