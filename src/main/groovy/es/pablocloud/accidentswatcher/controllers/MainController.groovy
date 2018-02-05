@@ -31,11 +31,13 @@ class MainController {
         geoJson.type = 'FeatureCollection'
         geoJson.features = new ArrayList<>()
         accidents.each {
-            geoJson.features.add(new Feature(
-                    type: 'Feature',
-                    geometry: new Geometry(type: 'Point', coordinates: [it.longitude, it.latitude]),
-                    properties: ['tweet': it.tweetText]
-            ))
+            if (it.latitude && it.longitude) {
+                geoJson.features.add(new Feature(
+                        type: 'Feature',
+                        geometry: new Geometry(type: 'Point', coordinates: [it.longitude, it.latitude]),
+                        properties: ['tweet': it.tweetText]
+                ))
+            }
         }
         geoJson
     }

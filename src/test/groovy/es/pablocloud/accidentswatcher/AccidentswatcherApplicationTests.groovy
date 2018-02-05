@@ -27,7 +27,7 @@ class AccidentswatcherApplicationTests {
     void testing() {
         ArrayList<Accident> list = new ArrayList()
         def actual = 0
-        Query query = new Query('accident')
+        Query query = new Query('accidente OR accident')
         QueryResult queryResult = twitterSearchService.twitter.search(query)
         while (queryResult.hasNext() && actual < total) {
             if (actual != 0) {
