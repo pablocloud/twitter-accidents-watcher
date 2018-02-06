@@ -14,15 +14,15 @@ class TwitterSearchService {
 
     final int total = 20
     final Twitter twitter
-    final AccidentRepositoy accidentRepositoy
+    final AccidentRepositoy accidentRepository
 
-    TwitterSearchService(Twitter twitter, AccidentRepositoy accidentRepositoy){
+    TwitterSearchService(Twitter twitter, AccidentRepositoy accidentRepository) {
         this.twitter = twitter
-        this.accidentRepositoy = accidentRepositoy
+        this.accidentRepository = accidentRepository
     }
 
     @Scheduled(fixedRate = 180000L)
-    def search(){
+    def search() {
         ArrayList<Accident> list = new ArrayList()
         def actual = 0
         Query query = new Query('accident OR accidente')
@@ -47,7 +47,7 @@ class TwitterSearchService {
                     accident.googleMapsUrl = Statics.GOOGLE_MAPS_BASE_URL + accident.latitude + ',' + accident.longitude
                 }
                 if (accident.longitude && accident.latitude) {
-                    if (accidentRepositoy.findByTwitterId(accident.twitterId) == null) {
+                    if (accidentRepository.findByTwitterId(accident.twitterId) == null) {
                         list.add(accident)
                     }
                 }
@@ -56,7 +56,7 @@ class TwitterSearchService {
         }
         list.each {
             println it.googleMapsUrl
-            accidentRepositoy.save(it)
+            accidentRepository.save(it)
         }
     }
 
