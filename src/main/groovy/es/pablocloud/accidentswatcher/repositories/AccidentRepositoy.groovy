@@ -9,4 +9,6 @@ interface AccidentRepositoy extends JpaRepository<Accident, Integer> {
 
     Accident findByTwitterId(Long id)
 
+    Accident findByInstagramId(String id)
+
 }

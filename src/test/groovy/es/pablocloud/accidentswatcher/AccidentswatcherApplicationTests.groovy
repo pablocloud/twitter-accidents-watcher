@@ -2,6 +2,7 @@ package es.pablocloud.accidentswatcher
 
 import es.pablocloud.accidentswatcher.domain.Accident
 import es.pablocloud.accidentswatcher.repositories.AccidentRepositoy
+import es.pablocloud.accidentswatcher.services.InstagramService
 import es.pablocloud.accidentswatcher.services.TwitterSearchService
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,7 +22,10 @@ class AccidentswatcherApplicationTests {
     TwitterSearchService twitterSearchService
 
     @Autowired
-    AccidentRepositoy accidentRepositoy
+    InstagramService instagramService
+
+    @Autowired
+    AccidentRepositoy accidentRepository
 
     @Test
     void testTwitter() {
@@ -49,8 +53,8 @@ class AccidentswatcherApplicationTests {
                     accident.googleMapsUrl = Statics.GOOGLE_MAPS_BASE_URL + accident.latitude + ',' + accident.longitude
                 }
                 if ((accident.longitude && accident.latitude) || (accident.placeName && accident.countryName)) {
-                    if (accidentRepositoy.findByTwitterId(accident.twitterId) == null) {
-                        accidentRepositoy.save(accident)
+                    if (accidentRepository.findByTwitterId(accident.twitterId) == null) {
+                        accidentRepository.save(accident)
                         list.add(accident)
                     }
                 }
@@ -59,6 +63,24 @@ class AccidentswatcherApplicationTests {
         }
         list.each {
             println it.googleMapsUrl
+        }
+    }
+
+    @Test
+    void testInstagram() {
+        instagramService.search('accident').stream().filter({ it.location != null }).each {
+            Accident accident = new Accident()
+            accident.instagramId = it.id
+            accident.tweetText = it.caption.get('text')
+            accident.latitude = it.location.get('lat') as Double
+            accident.placeName = it.location.get('city')
+            accident.longitude = it.location.get('lng') as Double
+            accident.googleMapsUrl = Statics.GOOGLE_MAPS_BASE_URL + accident.latitude + ',' + accident.longitude
+            if ((accident.longitude && accident.latitude) || (accident.placeName && accident.countryName)) {
+                if (accidentRepository.findByInstagramId(accident.instagramId) == null) {
+                    accidentRepository.save(accident)
+                }
+            }
         }
     }
 

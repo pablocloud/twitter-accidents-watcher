@@ -21,11 +21,10 @@ class TwitterSearchService {
         this.accidentRepository = accidentRepository
     }
 
-    @Scheduled(fixedRate = 180000L)
-    def search() {
+    def search(String text) {
         ArrayList<Accident> list = new ArrayList()
         def actual = 0
-        Query query = new Query('accident OR accidente')
+        Query query = new Query(text)
         QueryResult queryResult = twitter.search(query)
         while (queryResult.hasNext() && actual < total) {
             if (actual != 0) {
@@ -58,6 +57,11 @@ class TwitterSearchService {
             println it.googleMapsUrl
             accidentRepository.save(it)
         }
+    }
+
+    @Scheduled(fixedRate = 180000L)
+    def searchDaemon(){
+        this.search('accident OR accidente')
     }
 
 }

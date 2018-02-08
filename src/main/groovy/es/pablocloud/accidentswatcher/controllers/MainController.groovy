@@ -21,12 +21,12 @@ class MainController {
 
     @RequestMapping
     Collection<Accident> get() {
-        accidentRepositoy.findAll(new Sort(Sort.Direction.DESC, 'id')).take(40)
+        accidentRepositoy.findAll(new Sort(Sort.Direction.DESC, 'id')).take(100)
     }
 
     @RequestMapping('/geojson')
     GeoJson geoJson() {
-        def accidents = accidentRepositoy.findAll(new Sort(Sort.Direction.DESC, 'id')).take(40)
+        def accidents = accidentRepositoy.findAll(new Sort(Sort.Direction.DESC, 'id')).take(100)
         GeoJson geoJson = new GeoJson()
         geoJson.type = 'FeatureCollection'
         geoJson.features = new ArrayList<>()
